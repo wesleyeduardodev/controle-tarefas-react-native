@@ -130,9 +130,15 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    labelPending: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#E9A820', // Cor para pendentes
+        marginRight: 8,
+    },
     number: {
         color: '#FFF',
         fontSize: 14,
         fontWeight: 'bold'
-    },
+    }
 })
