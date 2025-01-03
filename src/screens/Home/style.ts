@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        paddingTop: 30,
         marginVertical: 16,
     },
     icon: {
@@ -99,46 +100,45 @@ export const styles = StyleSheet.create({
         textAlign: 'center'
     },
     taskInfoContainer: {
-        marginBottom: 16,
-        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 16,
+        width: '100%',
     },
     infoBlock: {
-        flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        flex: 1,
     },
     labelCreated: {
         fontSize: 16,
         fontWeight: 'bold',
         color: '#4EA8DE',
-        marginRight: 8
-    },
-
-    labelCompleted: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#8284FA',
-        marginRight: 8
-    },
-    circle: {
-        width: 24,
-        height: 24,
-        borderRadius: 12,
-        backgroundColor: '#333333',
-        justifyContent: 'center',
-        alignItems: 'center'
+        marginBottom: 4,
     },
     labelPending: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: '#E9A820', // Cor para pendentes
-        marginRight: 8,
+        color: '#E9A820',
+        marginBottom: 4,
+    },
+    labelCompleted: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#8284FA',
+        marginBottom: 4,
+    },
+    circle: {
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        backgroundColor: '#333333',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     number: {
         color: '#FFF',
-        fontSize: 14,
-        fontWeight: 'bold'
-    }
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
 })
