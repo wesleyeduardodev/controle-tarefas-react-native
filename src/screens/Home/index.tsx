@@ -1,12 +1,13 @@
-import {useState} from "react";
-import {Alert, FlatList, Text, TextInput, TouchableOpacity, View} from "react-native";
-import {Task, TaskProps} from "../components/Task";
+import { useState } from "react";
+import { Alert, FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Task, TaskProps } from "../components/Task";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import {styles} from "./style";
+import { styles } from "./style";
 
 export function Home() {
     const [tasks, setTasks] = useState<TaskProps[]>([]);
     const [taskName, setTaskName] = useState("");
+    const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
 
     const addTask = () => {
         if (taskName.trim() === "") {
@@ -31,7 +32,7 @@ export function Home() {
     const toggleTaskStatus = (name: string) => {
         setTasks((prevState) =>
             prevState.map((task) =>
-                task.name === name ? {...task, isCompleted: !task.isCompleted} : task
+                task.name === name ? { ...task, isCompleted: !task.isCompleted } : task
             )
         );
     };
@@ -50,19 +51,26 @@ export function Home() {
         ]);
     };
 
+    const filteredTasks = tasks.filter((task) => {
+        if (filter === "pending") return !task.isCompleted;
+        if (filter === "completed") return task.isCompleted;
+        return true; // "all" filter
+    });
+
     return (
         <View style={styles.container}>
-            <Header/>
-            <AddTaskForm taskName={taskName} setTaskName={setTaskName} addTask={addTask}/>
-            <TaskInfo tasks={tasks}/>
-            <TaskList tasks={tasks}/>
+            <Header />
+            <AddTaskForm taskName={taskName} setTaskName={setTaskName} addTask={addTask} />
+            <TaskInfo tasks={tasks} />
+            <FilterButtons filter={filter} setFilter={setFilter} />
+            <TaskList tasks={filteredTasks} />
         </View>
     );
 }
 
 const Header = () => (
     <View style={styles.logoContainer}>
-        <Icon name="rocket" size={64} color="#31CF67" style={styles.icon}/>
+        <Icon name="rocket" size={64} color="#31CF67" style={styles.icon} />
         <Text style={styles.appName}>Controle de Tarefas</Text>
     </View>
 );
@@ -85,12 +93,12 @@ const AddTaskForm = ({
             value={taskName}
         />
         <TouchableOpacity style={styles.button} onPress={addTask}>
-            <Icon name="add" size={24} color="#fff"/>
+            <Icon name="add" size={24} color="#fff" />
         </TouchableOpacity>
     </View>
 );
 
-const TaskInfo = ({tasks}: { tasks: TaskProps[] }) => {
+const TaskInfo = ({ tasks }: { tasks: TaskProps[] }) => {
     const createdTasksCount = tasks.length;
     const completedTasksCount = tasks.filter((task) => task.isCompleted).length;
     const pendingTasksCount = createdTasksCount - completedTasksCount;
@@ -119,11 +127,40 @@ const TaskInfo = ({tasks}: { tasks: TaskProps[] }) => {
     );
 };
 
-const TaskList = ({tasks}: { tasks: TaskProps[] }) => (
+const FilterButtons = ({
+                           filter,
+                           setFilter,
+                       }: {
+    filter: "all" | "pending" | "completed";
+    setFilter: (filter: "all" | "pending" | "completed") => void;
+}) => (
+    <View style={styles.filterContainer}>
+        <TouchableOpacity
+            style={[styles.filterButton, filter === "all" && styles.filterButtonActive]}
+            onPress={() => setFilter("all")}
+        >
+            <Text style={styles.filterText}>Todas</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            style={[styles.filterButton, filter === "pending" && styles.filterButtonActive]}
+            onPress={() => setFilter("pending")}
+        >
+            <Text style={styles.filterText}>Pendentes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+            style={[styles.filterButton, filter === "completed" && styles.filterButtonActive]}
+            onPress={() => setFilter("completed")}
+        >
+            <Text style={styles.filterText}>Concluídas</Text>
+        </TouchableOpacity>
+    </View>
+);
+
+const TaskList = ({ tasks }: { tasks: TaskProps[] }) => (
     <FlatList
         data={tasks}
         keyExtractor={(item) => item.name}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
             <Task
                 name={item.name}
                 isCompleted={item.isCompleted}
