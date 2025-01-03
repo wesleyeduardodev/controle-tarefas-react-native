@@ -13,27 +13,39 @@ export const styles = StyleSheet.create({
         marginTop: 48,
         textAlign: 'center'
     },
-
+    label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#6B6B6B',
+        marginBottom: 4,
+    },
+    logoContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+        marginVertical: 16,
+    },
+    icon: {
+        marginRight: 8,
+        color: '#317bcf',
+    },
+    appName: {
+        fontSize: 24,
+        fontWeight: "bold",
+        color: '#317bcf',
+    },
     infoLabel: {
         color: '#6B6B6B',
         fontSize: 16,
         fontWeight: 'bold',
     },
-
-    taskInfoContainer: {
-        marginBottom: 16,
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
     createdTasks: {
-        color: '#6B6B6B',
+        color: '#21af36',
         fontSize: 16,
         fontWeight: 'bold',
     },
     completedTasks: {
-        color: '#6B6B6B',
+        color: '#084ee6',
         fontSize: 16,
         fontWeight: 'bold',
     },
@@ -75,11 +87,52 @@ export const styles = StyleSheet.create({
     image: {
         width: 150,
         height: 150,
-        resizeMode: 'contain',
+        resizeMode: 'contain'
+    },
+    rocket: {
+        alignSelf: "center",
+        marginVertical: 16
     },
     listEmptyText: {
         color: '#FFF',
         fontSize: 14,
         textAlign: 'center'
-    }
+    },
+    taskInfoContainer: {
+        marginBottom: 16,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    infoBlock: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    labelCreated: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#4EA8DE',
+        marginRight: 8
+    },
+
+    labelCompleted: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#8284FA',
+        marginRight: 8
+    },
+    circle: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        backgroundColor: '#333333',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    number: {
+        color: '#FFF',
+        fontSize: 14,
+        fontWeight: 'bold'
+    },
 })

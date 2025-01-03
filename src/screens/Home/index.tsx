@@ -13,15 +13,16 @@ export function Home() {
         <View style={styles.container}>
             {viewImage()}
             {viewAddTask()}
-            {viewTaskInfo()}
+            {viewTasksInfo()}
             {listTasks()}
         </View>
     )
 
     function viewImage() {
         return (
-            <View style={styles.viewImage}>
-                <Image source={require('../../../assets/logo.jpeg')} style={styles.image}/>
+            <View style={styles.logoContainer}>
+                <Icon name="rocket" size={64} color="#31CF67" style={styles.icon}/>
+                <Text style={styles.appName}>Controle de Tarefas</Text>
             </View>
         );
     }
@@ -41,17 +42,23 @@ export function Home() {
         </View>;
     }
 
-    function viewTaskInfo() {
+    function viewTasksInfo() {
         const completedTasksCount = tasks.filter((task) => task.isCompleted).length;
         const createdTasksCount = tasks.length;
         return (
             <View style={styles.taskInfoContainer}>
-                <Text style={styles.createdTasks}>
-                    Criadas: {createdTasksCount}
-                </Text>
-                <Text style={styles.completedTasks}>
-                    Concluídas: {completedTasksCount}
-                </Text>
+                <View style={styles.infoBlock}>
+                    <Text style={styles.labelCreated}>Criadas</Text>
+                    <View style={styles.circle}>
+                        <Text style={styles.number}>{createdTasksCount}</Text>
+                    </View>
+                </View>
+                <View style={styles.infoBlock}>
+                    <Text style={styles.labelCompleted}>Concluídas</Text>
+                    <View style={styles.circle}>
+                        <Text style={styles.number}>{completedTasksCount}</Text>
+                    </View>
+                </View>
             </View>
         );
     }

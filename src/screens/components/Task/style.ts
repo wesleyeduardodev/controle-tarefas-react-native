@@ -7,44 +7,44 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 10,
+        padding: 10,
     },
-    nameCompleted: {
-        textDecorationLine: 'line-through',
-        color: '#6B6B6B',
+    containerCompleted: {
+        backgroundColor: '#333333',
     },
     checkboxContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 10,
+        marginRight: 8,
     },
     checkbox: {
         width: 24,
         height: 24,
         borderWidth: 2,
-        borderColor: '#555',
-        borderRadius: 4,
-        marginRight: 8,
+        borderColor: '#4EA8DE',
+        borderRadius: 12,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     checked: {
-        backgroundColor: '#007BFF',
+        backgroundColor: '#5E60CE', // Cor para o checkbox quando marcado
+        borderColor: '#5E60CE',
     },
     name: {
         flex: 1,
         fontSize: 16,
         color: '#FFF',
-        marginLeft: 16,
+        marginLeft: 8,
     },
-    buttonText: {
-        color: '#FFF',
-        fontSize: 24
+    nameCompleted: {
+        textDecorationLine: 'line-through',
+        color: '#6B6B6B',
     },
     button: {
-        width: 56,
-        height: 56,
+        width: 32,
+        height: 32,
         borderRadius: 5,
         backgroundColor: '#E23C44',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
-})
+});
