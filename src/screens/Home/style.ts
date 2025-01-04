@@ -141,31 +141,4 @@ export const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
-
-
-    filterContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 16,
-    },
-
-    filterButton: {
-        flex: 1,
-        paddingVertical: 10,
-        marginHorizontal: 4,
-        borderRadius: 5,
-        backgroundColor: '#1F1E25',
-        alignItems: 'center',
-    },
-
-    filterButtonActive: {
-        backgroundColor: '#317bcf', // Cor ativa para o filtro selecionado
-    },
-
-    filterText: {
-        color: '#FFF',
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-
 })
