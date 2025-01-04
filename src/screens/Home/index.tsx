@@ -7,6 +7,7 @@ import {styles} from "./style";
 export function Home() {
     const [tasks, setTasks] = useState<TaskProps[]>([]);
     const [taskName, setTaskName] = useState("");
+    const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
 
     const addTask = () => {
         if (taskName.trim() === "") {
@@ -50,12 +51,18 @@ export function Home() {
         ]);
     };
 
+    const filteredTasks = tasks.filter((task) => {
+        if (filter === "pending") return !task.isCompleted;
+        if (filter === "completed") return task.isCompleted;
+        return true; // "all" filter
+    });
+
     return (
         <View style={styles.container}>
             <Header/>
             <AddTaskForm taskName={taskName} setTaskName={setTaskName} addTask={addTask}/>
-            <TaskInfo tasks={tasks}/>
-            <TaskList tasks={tasks}/>
+            <TaskInfo tasks={tasks} filter={filter} setFilter={setFilter}/>
+            <TaskList tasks={filteredTasks}/>
         </View>
     );
 }
@@ -90,31 +97,48 @@ const AddTaskForm = ({
     </View>
 );
 
-const TaskInfo = ({tasks}: { tasks: TaskProps[] }) => {
+const TaskInfo = ({
+                      tasks,
+                      filter,
+                      setFilter,
+                  }: {
+    tasks: TaskProps[];
+    filter: "all" | "pending" | "completed";
+    setFilter: (filter: "all" | "pending" | "completed") => void;
+}) => {
     const createdTasksCount = tasks.length;
     const completedTasksCount = tasks.filter((task) => task.isCompleted).length;
     const pendingTasksCount = createdTasksCount - completedTasksCount;
 
     return (
         <View style={styles.taskInfoContainer}>
-            <View style={styles.infoBlock}>
+            <TouchableOpacity
+                style={[styles.infoBlock, filter === "all" && styles.infoBlockActive]}
+                onPress={() => setFilter("all")}
+            >
                 <Text style={styles.labelCreated}>Criadas</Text>
                 <View style={styles.circle}>
                     <Text style={styles.number}>{createdTasksCount}</Text>
                 </View>
-            </View>
-            <View style={styles.infoBlock}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.infoBlock, filter === "pending" && styles.infoBlockActive]}
+                onPress={() => setFilter("pending")}
+            >
                 <Text style={styles.labelPending}>Pendentes</Text>
                 <View style={styles.circle}>
                     <Text style={styles.number}>{pendingTasksCount}</Text>
                 </View>
-            </View>
-            <View style={styles.infoBlock}>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.infoBlock, filter === "completed" && styles.infoBlockActive]}
+                onPress={() => setFilter("completed")}
+            >
                 <Text style={styles.labelCompleted}>Concluídas</Text>
                 <View style={styles.circle}>
                     <Text style={styles.number}>{completedTasksCount}</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 };

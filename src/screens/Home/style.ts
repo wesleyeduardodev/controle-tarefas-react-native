@@ -13,6 +13,12 @@ export const styles = StyleSheet.create({
         marginTop: 48,
         textAlign: 'center'
     },
+    infoBlockActive: {
+        backgroundColor: '#cad3e4',
+        borderRadius: 8,
+        padding: 8,
+    },
+
     label: {
         fontSize: 16,
         fontWeight: 'bold',
