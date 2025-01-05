@@ -14,6 +14,10 @@ export const stylesTaskFormModal = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 16,
     },
+    descriptionInput: {
+        height: 120, // Aumenta a altura para comportar textos maiores
+        textAlignVertical: "top", // Garante que o texto comece na parte superior
+    },
     input: {
         width: "100%",
         backgroundColor: "#333333",

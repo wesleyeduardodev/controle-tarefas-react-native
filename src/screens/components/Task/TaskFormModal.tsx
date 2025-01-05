@@ -64,10 +64,11 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                     onChangeText={setTitle}
                 />
                 <TextInput
-                    style={stylesTaskFormModal.input}
+                    style={[stylesTaskFormModal.input, stylesTaskFormModal.descriptionInput]}
                     placeholder="Descrição"
                     value={description}
                     onChangeText={setDescription}
+                    multiline={true}
                 />
                 <View style={stylesTaskFormModal.switchContainer}>
                     <Text style={{ color: "#FFF" }}>Ativar Alarme?</Text>
