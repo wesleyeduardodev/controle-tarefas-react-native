@@ -1,150 +1,148 @@
-import {StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 
-export const styles = StyleSheet.create({
+export const stylesHome = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#131016',
-        padding: 15
-    },
-    eventName: {
-        color: '#FFF',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginTop: 48,
-        textAlign: 'center'
-    },
-    infoBlockActive: {
-        backgroundColor: '#cad3e4',
-        borderRadius: 8,
-        padding: 8,
-    },
-
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#6B6B6B',
-        marginBottom: 4,
+        backgroundColor: "#131016",
+        padding: 15,
     },
     logoContainer: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
-        paddingTop: 30,
         marginVertical: 16,
     },
     icon: {
         marginRight: 8,
-        color: '#317bcf',
+        color: "#317bcf",
     },
     appName: {
         fontSize: 24,
         fontWeight: "bold",
-        color: '#317bcf',
-    },
-    infoLabel: {
-        color: '#6B6B6B',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    createdTasks: {
-        color: '#21af36',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    completedTasks: {
-        color: '#084ee6',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    eventDate: {
-        color: '#6B6B6B',
-        fontSize: 16,
-        textAlign: 'center'
-    },
-    input: {
-        flex: 1,
-        height: 56,
-        backgroundColor: '#1F1E25',
-        borderRadius: 5,
-        color: '#FFFF',
-        padding: 16,
-        fontSize: 16,
-        marginRight: 12
-    },
-    buttonText: {
-        color: '#FFF',
-        fontSize: 24
-    },
-    button: {
-        width: 56,
-        height: 56,
-        borderRadius: 5,
-        backgroundColor: '#317bcf',
-        alignItems: 'center',
-        justifyContent: 'center'
+        color: "#317bcf",
     },
     form: {
-        width: '100%',
-        flexDirection: 'row',
-        marginBottom: 20
+        width: "100%",
+        flexDirection: "column",
+        marginBottom: 20,
+        alignItems: "center", // Centraliza os itens no eixo horizontal
     },
-    viewImage: {
-        alignItems: 'center'
+    input: {
+        width: "100%",
+        height: 56,
+        backgroundColor: "#1F1E25",
+        borderRadius: 5,
+        color: "#FFF",
+        padding: 16,
+        fontSize: 16,
+        marginBottom: 10,
     },
-    image: {
-        width: 150,
-        height: 150,
-        resizeMode: 'contain'
+    alarmSection: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        marginVertical: 10,
+        width: "100%",
     },
-    rocket: {
-        alignSelf: "center",
-        marginVertical: 16
+    timePickerButton: {
+        marginVertical: 10,
+        backgroundColor: "#1F1E25",
+        padding: 10,
+        borderRadius: 5,
+        alignItems: "center",
+        width: "100%",
     },
-    listEmptyText: {
-        color: '#FFF',
-        fontSize: 14,
-        textAlign: 'center'
+    timePickerText: {
+        color: "#FFF",
+        fontSize: 16,
+    },
+    addButton: {
+        width: "100%",
+        height: 56,
+        borderRadius: 5,
+        backgroundColor: "#317bcf",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 10,
     },
     taskInfoContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         marginBottom: 16,
-        width: '100%',
+        width: "100%",
     },
     infoBlock: {
-        alignItems: 'center',
+        alignItems: "center",
         flex: 1,
+    },
+    infoBlockActive: {
+        backgroundColor: "#cad3e4",
+        borderRadius: 8,
+        padding: 8,
     },
     labelCreated: {
         fontSize: 16,
-        fontWeight: 'bold',
-        color: '#4EA8DE',
+        fontWeight: "bold",
+        color: "#4EA8DE",
         marginBottom: 4,
     },
     labelPending: {
         fontSize: 16,
-        fontWeight: 'bold',
-        color: '#E9A820',
+        fontWeight: "bold",
+        color: "#E9A820",
         marginBottom: 4,
     },
     labelCompleted: {
         fontSize: 16,
-        fontWeight: 'bold',
-        color: '#8284FA',
+        fontWeight: "bold",
+        color: "#8284FA",
         marginBottom: 4,
+    },
+    label: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#6B6B6B",
+        marginBottom: 4,
+        backgroundColor: "#131016",
+        padding: 15,
     },
     circle: {
         width: 36,
         height: 36,
         borderRadius: 18,
-        backgroundColor: '#333333',
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: "#333333",
+        justifyContent: "center",
+        alignItems: "center",
     },
     number: {
-        color: '#FFF',
+        color: "#FFF",
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: "bold",
     },
-})
+    listEmptyText: {
+        color: "#FFF",
+        fontSize: 14,
+        textAlign: "center",
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#1F1E25",
+        padding: 20,
+    },
+    buttonText: {
+        color: "#FFF",
+        fontSize: 16,
+        fontWeight: "bold",
+    },
+    cancelButton: {
+        marginTop: 10,
+        backgroundColor: "#E23C44",
+        borderRadius: 5,
+        padding: 15,
+        alignItems: "center",
+        width: "100%",
+    },
+});
