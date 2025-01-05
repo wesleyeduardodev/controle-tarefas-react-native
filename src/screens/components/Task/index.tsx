@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity, View} from "react-native";
+import {Alert, Text, TouchableOpacity, View} from "react-native";
 import {stylesTask} from "./style";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
@@ -43,9 +43,29 @@ export function Task({
             <TouchableOpacity style={stylesTask.editTask} onPress={onEdit}>
                 <Icon name="edit" size={24} color="#FFF"/>
             </TouchableOpacity>
-            <TouchableOpacity style={stylesTask.removeTask} onPress={onRemove}>
-                <Icon name="delete" size={24} color="#FFF"/>
+            <TouchableOpacity
+                style={stylesTask.button}
+                onPress={() =>
+                    Alert.alert(
+                        "Confirmar Remoção",
+                        `Você tem certeza que deseja remover a tarefa "${title}"?`,
+                        [
+                            {
+                                text: "Não",
+                                style: "cancel",
+                            },
+                            {
+                                text: "Sim",
+                                style: "destructive",
+                                onPress: onRemove,
+                            },
+                        ]
+                    )
+                }
+            >
+                <Icon name="delete" size={24} color="#FFF" />
             </TouchableOpacity>
+
         </View>
     );
 }

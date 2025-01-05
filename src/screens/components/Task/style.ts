@@ -13,6 +13,15 @@ export const stylesTask = StyleSheet.create({
     containerCompleted: {
         backgroundColor: "#333333",
     },
+    button: {
+        width: 32,
+        height: 32,
+        borderRadius: 5,
+        backgroundColor: "#E23C44",
+        alignItems: "center",
+        justifyContent: "center",
+        marginHorizontal: 4,
+    },
     checkboxContainer: {
         marginRight: 8,
     },
