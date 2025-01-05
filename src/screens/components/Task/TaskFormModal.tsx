@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
     Modal,
     View,
@@ -8,8 +8,8 @@ import {
     Switch,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import {TaskProps} from "./index";
-import {stylesTaskFormModal} from "./syleTaskFormModal";
+import { TaskProps } from "./index";
+import { stylesTaskFormModal } from "./syleTaskFormModal";
 
 type TaskFormModalProps = {
     visible: boolean;
@@ -18,12 +18,38 @@ type TaskFormModalProps = {
     onClose: () => void;
 };
 
-export function TaskFormModal({visible, task, onSave, onClose}: TaskFormModalProps) {
+export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalProps) {
     const [title, setTitle] = useState(task?.title || "");
     const [description, setDescription] = useState(task?.description || "");
     const [hasAlarm, setHasAlarm] = useState(task?.hasAlarm || false);
     const [alarmTime, setAlarmTime] = useState<string | undefined>(task?.alarmTime);
+    const [showDatePicker, setShowDatePicker] = useState(false);
     const [showTimePicker, setShowTimePicker] = useState(false);
+
+    useEffect(() => {
+        setTitle(task?.title || "");
+        setDescription(task?.description || "");
+        setHasAlarm(task?.hasAlarm || false);
+        setAlarmTime(task?.alarmTime || undefined);
+    }, [task]);
+
+    const handleDateChange = (event: any, date?: Date) => {
+        setShowDatePicker(false);
+        if (date) {
+            const currentDate = new Date(alarmTime || new Date());
+            currentDate.setFullYear(date.getFullYear(), date.getMonth(), date.getDate());
+            setAlarmTime(currentDate.toISOString());
+        }
+    };
+
+    const handleTimeChange = (event: any, time?: Date) => {
+        setShowTimePicker(false);
+        if (time) {
+            const currentDate = new Date(alarmTime || new Date());
+            currentDate.setHours(time.getHours(), time.getMinutes());
+            setAlarmTime(currentDate.toISOString());
+        }
+    };
 
     return (
         <Modal visible={visible} animationType="slide" transparent={true}>
@@ -44,7 +70,7 @@ export function TaskFormModal({visible, task, onSave, onClose}: TaskFormModalPro
                     onChangeText={setDescription}
                 />
                 <View style={stylesTaskFormModal.switchContainer}>
-                    <Text style={{color: "#FFF"}}>Ativar Alarme?</Text>
+                    <Text style={{ color: "#FFF" }}>Ativar Alarme?</Text>
                     <Switch
                         value={hasAlarm}
                         onValueChange={(value) => {
@@ -54,31 +80,49 @@ export function TaskFormModal({visible, task, onSave, onClose}: TaskFormModalPro
                     />
                 </View>
                 {hasAlarm && (
-                    <TouchableOpacity
-                        onPress={() => setShowTimePicker(true)}
-                        style={stylesTaskFormModal.timePickerButton}
-                    >
-                        <Text style={{color: "#FFF"}}>
-                            {alarmTime
-                                ? `Alarme: ${new Date(alarmTime).toLocaleString()}`
-                                : "Definir Alarme"}
-                        </Text>
-                    </TouchableOpacity>
+                    <>
+                        <TouchableOpacity
+                            onPress={() => setShowDatePicker(true)}
+                            style={stylesTaskFormModal.timePickerButton}
+                        >
+                            <Text style={{ color: "#FFF" }}>
+                                {alarmTime
+                                    ? `Data: ${new Date(alarmTime).toLocaleDateString()}`
+                                    : "Definir Data"}
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => setShowTimePicker(true)}
+                            style={stylesTaskFormModal.timePickerButton}
+                        >
+                            <Text style={{ color: "#FFF" }}>
+                                {alarmTime
+                                    ? `Hora: ${new Date(alarmTime).toLocaleTimeString()}`
+                                    : "Definir Hora"}
+                            </Text>
+                        </TouchableOpacity>
+                    </>
+                )}
+                {showDatePicker && (
+                    <DateTimePicker
+                        value={alarmTime ? new Date(alarmTime) : new Date()}
+                        mode="date"
+                        display="default"
+                        onChange={handleDateChange}
+                    />
                 )}
                 {showTimePicker && (
                     <DateTimePicker
                         value={alarmTime ? new Date(alarmTime) : new Date()}
                         mode="time"
+                        is24Hour={true}
                         display="default"
-                        onChange={(event, date) => {
-                            setShowTimePicker(false);
-                            if (date) setAlarmTime(date.toISOString());
-                        }}
+                        onChange={handleTimeChange}
                     />
                 )}
                 <TouchableOpacity
                     style={stylesTaskFormModal.saveButton}
-                    onPress={() => onSave({title, description, hasAlarm, alarmTime})}
+                    onPress={() => onSave({ title, description, hasAlarm, alarmTime })}
                 >
                     <Text style={stylesTaskFormModal.buttonText}>Salvar</Text>
                 </TouchableOpacity>
