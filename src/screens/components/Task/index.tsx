@@ -35,7 +35,7 @@ export function Task({
                 <Text style={[stylesTask.title, completed && stylesTask.titleCompleted]}>
                     {title}
                 </Text>
-                <Text style={stylesTask.description}>{description}</Text>
+               {/* <Text style={stylesTask.description}>{description}</Text>*/}
                 {hasAlarm && alarmTime && (
                     <Text style={stylesTask.alarmText}>
                         ⏰ Alarme: {new Date(alarmTime).toLocaleString()}
