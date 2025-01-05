@@ -182,6 +182,10 @@ export function Home() {
                     visible={isModalVisible}
                     task={taskToEdit}
                     onSave={(task) => {
+                        if (!task.title || !task.title.trim()) {
+                            Alert.alert("Validação", "O nome da tarefa é obrigatório.");
+                            return;
+                        }
                         if (taskToEdit) {
                             handleEditTask(taskToEdit.id, task);
                         } else {
