@@ -16,7 +16,6 @@ export type TaskProps = {
 
 export function Task({
                          title,
-                         description,
                          completed,
                          hasAlarm,
                          alarmTime,
@@ -35,17 +34,16 @@ export function Task({
                 <Text style={[stylesTask.title, completed && stylesTask.titleCompleted]}>
                     {title}
                 </Text>
-                {<Text style={stylesTask.description}>{description}</Text>}
                 {hasAlarm && alarmTime && (
                     <Text style={stylesTask.alarmText}>
-                        ⏰ Alarme: {new Date(alarmTime).toLocaleString()}
+                        ⏰ {new Date(alarmTime).toLocaleTimeString()}
                     </Text>
                 )}
             </View>
-            <TouchableOpacity style={stylesTask.button} onPress={onEdit}>
+            <TouchableOpacity style={stylesTask.editTask} onPress={onEdit}>
                 <Icon name="edit" size={24} color="#FFF"/>
             </TouchableOpacity>
-            <TouchableOpacity style={stylesTask.button} onPress={onRemove}>
+            <TouchableOpacity style={stylesTask.removeTask} onPress={onRemove}>
                 <Icon name="delete" size={24} color="#FFF"/>
             </TouchableOpacity>
         </View>

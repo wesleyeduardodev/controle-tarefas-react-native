@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from "react-native";
 
 export const stylesTask = StyleSheet.create({
     container: {
@@ -31,27 +31,31 @@ export const stylesTask = StyleSheet.create({
     },
     taskDetails: {
         flex: 1,
-        flexDirection: "column",
     },
     title: {
         fontSize: 16,
-        fontWeight: "bold",
         color: "#FFF",
+        fontWeight: "bold",
     },
     titleCompleted: {
         textDecorationLine: "line-through",
         color: "#6B6B6B",
-    },
-    description: {
-        fontSize: 14,
-        color: "#A9A9A9",
     },
     alarmText: {
         color: "#FFD700",
         fontSize: 14,
         marginTop: 4,
     },
-    button: {
+    editTask: {
+        width: 32,
+        height: 32,
+        borderRadius: 5,
+        backgroundColor: "#409e36",
+        alignItems: "center",
+        justifyContent: "center",
+        marginHorizontal: 4,
+    },
+    removeTask: {
         width: 32,
         height: 32,
         borderRadius: 5,

@@ -1,29 +1,21 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import {
     Alert,
     FlatList,
-    Modal,
-    Switch,
     Text,
-    TextInput,
     TouchableOpacity,
     View,
 } from "react-native";
-import { Task, TaskProps } from "../components/Task";
+import {Task, TaskProps} from "../components/Task";
+import {TaskFormModal} from "../components/Task/TaskFormModal";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import { stylesHome } from "./style";
-import { api } from "../services/api";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import {stylesHome} from "./style";
+import {api} from "../services/api";
 
 export function Home() {
     const [tasks, setTasks] = useState<TaskProps[]>([]);
-    const [taskName, setTaskName] = useState("");
-    const [taskDescription, setTaskDescription] = useState("");
-    const [hasAlarm, setHasAlarm] = useState(false);
-    const [alarmTime, setAlarmTime] = useState<string | undefined>(undefined);
-    const [showTimePicker, setShowTimePicker] = useState(false);
     const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
-    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false);
     const [taskToEdit, setTaskToEdit] = useState<TaskProps | null>(null);
 
     useEffect(() => {
@@ -40,39 +32,21 @@ export function Home() {
         }
     };
 
-    const addTask = async () => {
-        if (taskName.trim() === "") {
-            return Alert.alert("Nome inválido", "O nome da tarefa não pode estar vazio.");
-        }
-
-        if (hasAlarm && !alarmTime) {
-            return Alert.alert("Alarme inválido", "Defina um horário para o alarme.");
-        }
-
+    const handleAddTask = async (newTask: TaskProps) => {
         try {
-            const response = await api.post("/tasks/v1", {
-                title: taskName,
-                description: taskDescription,
-                completed: false,
-                hasAlarm,
-                alarmTime,
-            });
+            const response = await api.post("/tasks/v1", newTask);
             setTasks((prevState) => [...prevState, response.data]);
-            setTaskName("");
-            setTaskDescription("");
-            setHasAlarm(false);
-            setAlarmTime(undefined);
         } catch (error) {
             Alert.alert("Erro", "Não foi possível adicionar a tarefa.");
             console.error("Erro ao adicionar tarefa:", error);
         }
     };
 
-    const editTask = async (id: number, updatedTask: Partial<TaskProps>) => {
+    const handleEditTask = async (id: number, updatedTask: Partial<TaskProps>) => {
         try {
             await api.put(`/tasks/v1/${id}`, updatedTask);
             setTasks((prevState) =>
-                prevState.map((task) => (task.id === id ? { ...task, ...updatedTask } : task))
+                prevState.map((task) => (task.id === id ? {...task, ...updatedTask} : task))
             );
         } catch (error) {
             Alert.alert("Erro", "Não foi possível editar a tarefa.");
@@ -80,7 +54,17 @@ export function Home() {
         }
     };
 
-    const toggleTaskStatus = async (id: number, currentStatus: boolean) => {
+    const handleRemoveTask = async (id: number) => {
+        try {
+            await api.delete(`/tasks/v1/${id}`);
+            setTasks((prevState) => prevState.filter((task) => task.id !== id));
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível remover a tarefa.");
+            console.error("Erro ao remover tarefa:", error);
+        }
+    };
+
+    const handleToggleTaskStatus = async (id: number, currentStatus: boolean) => {
         try {
             const taskToUpdate = tasks.find((task) => task.id === id);
             if (!taskToUpdate) {
@@ -95,22 +79,12 @@ export function Home() {
 
             setTasks((prevState) =>
                 prevState.map((task) =>
-                    task.id === id ? { ...task, completed: !currentStatus } : task
+                    task.id === id ? {...task, completed: !currentStatus} : task
                 )
             );
         } catch (error) {
-            console.error("Erro ao atualizar a tarefa:", error);
             Alert.alert("Erro", "Não foi possível atualizar a tarefa.");
-        }
-    };
-
-    const removeTask = async (id: number) => {
-        try {
-            await api.delete(`/tasks/v1/${id}`);
-            setTasks((prevState) => prevState.filter((task) => task.id !== id));
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível remover a tarefa.");
-            console.error("Erro:", error);
+            console.error("Erro ao atualizar a tarefa:", error);
         }
     };
 
@@ -124,83 +98,18 @@ export function Home() {
     const completedTasksCount = tasks.filter((task) => task.completed).length;
     const pendingTasksCount = createdTasksCount - completedTasksCount;
 
-    const handleEditTask = (task: TaskProps) => {
-        setTaskToEdit(task);
-        setIsEditModalVisible(true);
-    };
-
-    const saveTaskChanges = async () => {
-        if (taskToEdit) {
-            await editTask(taskToEdit.id, {
-                title: taskToEdit.title,
-                description: taskToEdit.description,
-                hasAlarm: taskToEdit.hasAlarm,
-                alarmTime: taskToEdit.alarmTime,
-            });
-            setIsEditModalVisible(false);
-            setTaskToEdit(null);
-        }
-    };
-
     return (
         <View style={stylesHome.container}>
-            <View style={stylesHome.logoContainer}>
-                <Icon name="calendar-today" size={64} color="#31CF67" style={stylesHome.icon} />
-                <Text style={stylesHome.appName}>Minha Agenda</Text>
-            </View>
-            <View style={stylesHome.form}>
-                <TextInput
-                    style={stylesHome.input}
-                    placeholder="Título"
-                    placeholderTextColor="#6B6B6B"
-                    onChangeText={setTaskName}
-                    value={taskName}
-                />
-                <TextInput
-                    style={stylesHome.input}
-                    placeholder="Descrição"
-                    placeholderTextColor="#6B6B6B"
-                    onChangeText={setTaskDescription}
-                    value={taskDescription}
-                />
-                <View style={stylesHome.alarmSection}>
-                    <Text style={stylesHome.label}>Ativar Alarme?</Text>
-                    <Switch
-                        value={hasAlarm}
-                        onValueChange={(value) => {
-                            setHasAlarm(value);
-                            if (!value) setAlarmTime(undefined);
-                        }}
-                    />
-                </View>
-                {hasAlarm && (
-                    <TouchableOpacity
-                        onPress={() => setShowTimePicker(true)}
-                        style={stylesHome.timePickerButton}
-                    >
-                        <Text style={stylesHome.timePickerText}>
-                            {alarmTime
-                                ? `Alarme: ${new Date(alarmTime).toLocaleString()}`
-                                : "Definir Horário"}
-                        </Text>
-                    </TouchableOpacity>
-                )}
-                <TouchableOpacity style={stylesHome.addButton} onPress={addTask}>
-                    <Icon name="add" size={24} color="#fff" />
-                </TouchableOpacity>
-                {showTimePicker && (
-                    <DateTimePicker
-                        value={alarmTime ? new Date(alarmTime) : new Date()}
-                        mode="time"
-                        is24Hour={true}
-                        display="default"
-                        onChange={(event, selectedTime) => {
-                            setShowTimePicker(false);
-                            if (selectedTime) setAlarmTime(selectedTime.toISOString());
-                        }}
-                    />
-                )}
-            </View>
+            <TouchableOpacity
+                style={stylesHome.addButton}
+                onPress={() => {
+                    setTaskToEdit(null);
+                    setIsModalVisible(true);
+                }}
+            >
+                <Icon name="add" size={28} color="#FFF"/>
+                <Text style={stylesHome.addButtonText}>Adicionar Lembrete</Text>
+            </TouchableOpacity>
 
             <View style={stylesHome.taskInfoContainer}>
                 <TouchableOpacity
@@ -244,7 +153,7 @@ export function Home() {
             <FlatList
                 data={filteredTasks}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
+                renderItem={({item}) => (
                     <Task
                         id={item.id}
                         title={item.title}
@@ -252,9 +161,12 @@ export function Home() {
                         completed={item.completed}
                         hasAlarm={item.hasAlarm}
                         alarmTime={item.alarmTime}
-                        onToggleStatus={() => toggleTaskStatus(item.id, item.completed)}
-                        onRemove={() => removeTask(item.id)}
-                        onEdit={() => handleEditTask(item)}
+                        onToggleStatus={() => handleToggleTaskStatus(item.id, item.completed)}
+                        onRemove={() => handleRemoveTask(item.id)}
+                        onEdit={() => {
+                            setTaskToEdit(item);
+                            setIsModalVisible(true);
+                        }}
                     />
                 )}
                 showsVerticalScrollIndicator={false}
@@ -265,69 +177,20 @@ export function Home() {
                 )}
             />
 
-            {isEditModalVisible && (
-                <Modal visible={isEditModalVisible} animationType="slide">
-                    <View style={stylesHome.modalContainer}>
-                        <TextInput
-                            style={stylesHome.input}
-                            value={taskToEdit?.title}
-                            onChangeText={(text) =>
-                                setTaskToEdit({ ...taskToEdit!, title: text })
-                            }
-                            placeholder="Título"
-                        />
-                        <TextInput
-                            style={stylesHome.input}
-                            value={taskToEdit?.description}
-                            onChangeText={(text) =>
-                                setTaskToEdit({ ...taskToEdit!, description: text })
-                            }
-                            placeholder="Descrição"
-                        />
-                        <View style={stylesHome.alarmSection}>
-                            <Text style={stylesHome.label}>Ativar Alarme?</Text>
-                            <Switch
-                                value={taskToEdit?.hasAlarm || false}
-                                onValueChange={(value) =>
-                                    setTaskToEdit({
-                                        ...taskToEdit!,
-                                        hasAlarm: value,
-                                        alarmTime: undefined,
-                                    })
-                                }
-                            />
-                        </View>
-                        {taskToEdit?.hasAlarm && (
-                            <TouchableOpacity
-                                onPress={() => setShowTimePicker(true)}
-                                style={stylesHome.timePickerButton}
-                            >
-                                <Text style={stylesHome.timePickerText}>
-                                    {taskToEdit.alarmTime
-                                        ? `Alarme: ${new Date(
-                                            taskToEdit.alarmTime
-                                        ).toLocaleString()}`
-                                        : "Definir Horário"}
-                                </Text>
-                            </TouchableOpacity>
-                        )}
-                        <TouchableOpacity
-                            style={stylesHome.addButton}
-                            onPress={saveTaskChanges}
-                        >
-                            <Text style={stylesHome.buttonText}>Salvar Alterações</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={stylesHome.cancelButton}
-                            onPress={() => {
-                                setIsEditModalVisible(false);
-                                setTaskToEdit(null);
-                            }}
-                        >
-                            <Text style={stylesHome.buttonText}>Cancelar</Text>
-                        </TouchableOpacity>
-                    </View>
-                </Modal>
+            {isModalVisible && (
+                <TaskFormModal
+                    visible={isModalVisible}
+                    task={taskToEdit}
+                    onSave={(task) => {
+                        if (taskToEdit) {
+                            handleEditTask(taskToEdit.id, task);
+                        } else {
+                            handleAddTask(task as TaskProps);
+                        }
+                        setIsModalVisible(false);
+                    }}
+                    onClose={() => setIsModalVisible(false)}
+                />
             )}
         </View>
     );

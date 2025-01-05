@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from "react-native";
 
 export const stylesHome = StyleSheet.create({
     container: {
@@ -6,72 +6,26 @@ export const stylesHome = StyleSheet.create({
         backgroundColor: "#131016",
         padding: 20,
     },
-    logoContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 30,
-        marginVertical: 16,
-    },
-    icon: {
-        marginRight: 8,
-        color: "#317bcf",
-    },
-    appName: {
-        fontSize: 24,
-        fontWeight: "bold",
-        color: "#317bcf",
-    },
-    form: {
-        width: "100%",
-        flexDirection: "column",
-        marginBottom: 20,
-        alignItems: "center", // Centraliza os itens no eixo horizontal
-    },
-    input: {
-        width: "100%",
-        height: 56,
-        backgroundColor: "#1F1E25",
-        borderRadius: 5,
-        color: "#FFF",
-        padding: 16,
-        fontSize: 16,
-        marginBottom: 10,
-    },
-    alarmSection: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginVertical: 10,
-        width: "100%",
-    },
-    timePickerButton: {
-        marginVertical: 10,
-        backgroundColor: "#1F1E25",
-        padding: 10,
-        borderRadius: 5,
-        alignItems: "center",
-        width: "100%",
-    },
-    timePickerText: {
-        color: "#FFF",
-        fontSize: 16,
-    },
     addButton: {
-        width: "100%",
-        height: 56,
-        borderRadius: 5,
         backgroundColor: "#317bcf",
-        alignItems: "center",
+        flexDirection: "row",
         justifyContent: "center",
-        marginTop: 10,
+        alignItems: "center",
+        borderRadius: 8,
+        marginTop: 20,
+        padding: 12,
+        marginBottom: 16,
+    },
+    addButtonText: {
+        color: "#FFF",
+        fontSize: 18,
+        fontWeight: "bold",
+        marginLeft: 8,
     },
     taskInfoContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center",
         marginBottom: 16,
-        width: "100%",
     },
     infoBlock: {
         alignItems: "center",
@@ -86,27 +40,16 @@ export const stylesHome = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
         color: "#4EA8DE",
-        marginBottom: 4,
     },
     labelPending: {
         fontSize: 16,
         fontWeight: "bold",
         color: "#E9A820",
-        marginBottom: 4,
     },
     labelCompleted: {
         fontSize: 16,
         fontWeight: "bold",
         color: "#8284FA",
-        marginBottom: 4,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: "bold",
-        color: "#6B6B6B",
-        marginBottom: 4,
-        backgroundColor: "#131016",
-        padding: 15,
     },
     circle: {
         width: 36,
@@ -115,6 +58,7 @@ export const stylesHome = StyleSheet.create({
         backgroundColor: "#333333",
         justifyContent: "center",
         alignItems: "center",
+        marginTop: 4,
     },
     number: {
         color: "#FFF",
@@ -123,27 +67,8 @@ export const stylesHome = StyleSheet.create({
     },
     listEmptyText: {
         color: "#FFF",
-        fontSize: 14,
         textAlign: "center",
-    },
-    modalContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#1F1E25",
-        padding: 20,
-    },
-    buttonText: {
-        color: "#FFF",
         fontSize: 16,
-        fontWeight: "bold",
-    },
-    cancelButton: {
-        marginTop: 10,
-        backgroundColor: "#E23C44",
-        borderRadius: 5,
-        padding: 15,
-        alignItems: "center",
-        width: "100%",
+        marginTop: 32,
     },
 });
