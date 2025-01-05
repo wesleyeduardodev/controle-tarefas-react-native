@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import {
     Modal,
     View,
@@ -8,8 +8,8 @@ import {
     Switch,
 } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { TaskProps } from "./index";
-import { stylesTaskFormModal } from "./syleTaskFormModal";
+import {TaskProps} from "./index";
+import {stylesTaskFormModal} from "./syleFormModal";
 
 type TaskFormModalProps = {
     visible: boolean;
@@ -18,7 +18,7 @@ type TaskFormModalProps = {
     onClose: () => void;
 };
 
-export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalProps) {
+export function FormModal({visible, task, onSave, onClose}: TaskFormModalProps) {
     const [title, setTitle] = useState(task?.title || "");
     const [description, setDescription] = useState(task?.description || "");
     const [hasAlarm, setHasAlarm] = useState(task?.hasAlarm || false);
@@ -55,34 +55,38 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
         <Modal visible={visible} animationType="slide" transparent={true}>
             <View style={stylesTaskFormModal.container}>
                 <Text style={stylesTaskFormModal.title}>
-                    {task ? "Editar Tarefa" : "Nova Tarefa"}
+                    {task ? "Editar Lembre" : "Novo Lembrete"}
                 </Text>
 
                 {/* Label e Input para o Título */}
-                <Text style={stylesTaskFormModal.label}>Título</Text>
-                <TextInput
-                    style={stylesTaskFormModal.input}
-                    placeholder="Título"
-                    value={title}
-                    onChangeText={setTitle}
-                />
+                <View style={stylesTaskFormModal.fieldContainer}>
+                    <Text style={stylesTaskFormModal.label}>Título</Text>
+                    <TextInput
+                        style={stylesTaskFormModal.input}
+                        placeholder="Título"
+                        value={title}
+                        onChangeText={setTitle}
+                    />
+                </View>
 
                 {/* Label e Input para a Descrição */}
-                <Text style={stylesTaskFormModal.label}>Descrição</Text>
-                <TextInput
-                    style={[stylesTaskFormModal.input, stylesTaskFormModal.descriptionInput]}
-                    placeholder="Descrição"
-                    value={description}
-                    onChangeText={(text) => {
-                        if (text.length <= 255) {
-                            setDescription(text);
-                        }
-                    }}
-                    multiline={true}
-                />
-                <Text style={stylesTaskFormModal.charCount}>
-                    {description.length}/255
-                </Text>
+                <View style={stylesTaskFormModal.fieldContainer}>
+                    <Text style={stylesTaskFormModal.label}>Descrição</Text>
+                    <TextInput
+                        style={[stylesTaskFormModal.input, stylesTaskFormModal.descriptionInput]}
+                        placeholder="Descrição"
+                        value={description}
+                        onChangeText={(text) => {
+                            if (text.length <= 255) {
+                                setDescription(text);
+                            }
+                        }}
+                        multiline={true}
+                    />
+                    <Text style={stylesTaskFormModal.charCount}>
+                        {description.length}/255
+                    </Text>
+                </View>
 
                 {/* Switch e Alarme */}
                 <View style={stylesTaskFormModal.switchContainer}>
@@ -143,7 +147,7 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                 {/* Botões */}
                 <TouchableOpacity
                     style={stylesTaskFormModal.saveButton}
-                    onPress={() => onSave({ title, description, hasAlarm, alarmTime })}
+                    onPress={() => onSave({title, description, hasAlarm, alarmTime})}
                 >
                     <Text style={stylesTaskFormModal.buttonText}>Salvar</Text>
                 </TouchableOpacity>
@@ -155,7 +159,5 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                 </TouchableOpacity>
             </View>
         </Modal>
-
-
     );
 }

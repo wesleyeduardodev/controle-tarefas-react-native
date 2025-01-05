@@ -63,9 +63,8 @@ export function Task({
                     )
                 }
             >
-                <Icon name="delete" size={24} color="#FFF" />
+                <Icon name="delete" size={24} color="#FFF"/>
             </TouchableOpacity>
-
         </View>
     );
 }

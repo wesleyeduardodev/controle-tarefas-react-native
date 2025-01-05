@@ -5,36 +5,24 @@ export const stylesTaskFormModal = StyleSheet.create({
         flex: 1,
         backgroundColor: "#1F1E25",
         justifyContent: "center",
-        alignItems: "center",
         padding: 20,
     },
-    timePickerText: {
-        color: "#FFF",
-        fontSize: 16,
+    fieldContainer: {
+        marginBottom: 16,
+        width: "100%",
     },
-    label: {
-        color: "#FFF",
-        fontSize: 16,
-        marginBottom: 8,
-        textAlign: "left",
-        fontWeight: "bold",
-    },
-    charCount: {
-        color: "#FFF",
-        fontSize: 14,
-        textAlign: "right",
-        marginBottom: 15,
-    },
-
     title: {
         color: "#FFF",
         fontSize: 20,
         fontWeight: "bold",
         marginBottom: 16,
+        textAlign: "center",
     },
-    descriptionInput: {
-        height: 120, // Aumenta a altura para comportar textos maiores
-        textAlignVertical: "top", // Garante que o texto comece na parte superior
+    label: {
+        color: "#FFF",
+        fontSize: 16,
+        marginBottom: 8,
+        fontWeight: "bold",
     },
     input: {
         width: "100%",
@@ -42,12 +30,21 @@ export const stylesTaskFormModal = StyleSheet.create({
         color: "#FFF",
         borderRadius: 5,
         padding: 12,
-        marginBottom: 16,
+        fontSize: 16,
+    },
+    descriptionInput: {
+        height: 120,
+        textAlignVertical: "top",
+    },
+    charCount: {
+        color: "#FFF",
+        fontSize: 14,
+        textAlign: "right",
     },
     switchContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        width: "100%",
+        alignItems: "center",
         marginBottom: 16,
     },
     timePickerButton: {
@@ -58,11 +55,14 @@ export const stylesTaskFormModal = StyleSheet.create({
         marginBottom: 16,
         width: "100%",
     },
+    timePickerText: {
+        color: "#FFF",
+        fontSize: 16,
+    },
     saveButton: {
         backgroundColor: "#317bcf",
         padding: 12,
         borderRadius: 5,
-        width: "100%",
         alignItems: "center",
         marginBottom: 16,
     },
@@ -70,7 +70,6 @@ export const stylesTaskFormModal = StyleSheet.create({
         backgroundColor: "#E23C44",
         padding: 12,
         borderRadius: 5,
-        width: "100%",
         alignItems: "center",
     },
     buttonText: {

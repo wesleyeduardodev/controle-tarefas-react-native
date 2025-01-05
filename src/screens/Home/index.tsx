@@ -7,7 +7,7 @@ import {
     View,
 } from "react-native";
 import {Task, TaskProps} from "../components/Task";
-import {TaskFormModal} from "../components/Task/TaskFormModal";
+import {FormModal} from "../components/Task/FormModal";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import {stylesHome} from "./style";
 import {api} from "../services/api";
@@ -178,7 +178,7 @@ export function Home() {
             />
 
             {isModalVisible && (
-                <TaskFormModal
+                <FormModal
                     visible={isModalVisible}
                     task={taskToEdit}
                     onSave={(task) => {
