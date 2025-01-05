@@ -57,21 +57,36 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                 <Text style={stylesTaskFormModal.title}>
                     {task ? "Editar Tarefa" : "Nova Tarefa"}
                 </Text>
+
+                {/* Label e Input para o Título */}
+                <Text style={stylesTaskFormModal.label}>Título</Text>
                 <TextInput
                     style={stylesTaskFormModal.input}
                     placeholder="Título"
                     value={title}
                     onChangeText={setTitle}
                 />
+
+                {/* Label e Input para a Descrição */}
+                <Text style={stylesTaskFormModal.label}>Descrição</Text>
                 <TextInput
                     style={[stylesTaskFormModal.input, stylesTaskFormModal.descriptionInput]}
                     placeholder="Descrição"
                     value={description}
-                    onChangeText={setDescription}
+                    onChangeText={(text) => {
+                        if (text.length <= 255) {
+                            setDescription(text);
+                        }
+                    }}
                     multiline={true}
                 />
+                <Text style={stylesTaskFormModal.charCount}>
+                    {description.length}/255
+                </Text>
+
+                {/* Switch e Alarme */}
                 <View style={stylesTaskFormModal.switchContainer}>
-                    <Text style={{ color: "#FFF" }}>Ativar Alarme?</Text>
+                    <Text style={stylesTaskFormModal.label}>Ativar Alarme?</Text>
                     <Switch
                         value={hasAlarm}
                         onValueChange={(value) => {
@@ -80,13 +95,14 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                         }}
                     />
                 </View>
+
                 {hasAlarm && (
                     <>
                         <TouchableOpacity
                             onPress={() => setShowDatePicker(true)}
                             style={stylesTaskFormModal.timePickerButton}
                         >
-                            <Text style={{ color: "#FFF" }}>
+                            <Text style={stylesTaskFormModal.timePickerText}>
                                 {alarmTime
                                     ? `Data: ${new Date(alarmTime).toLocaleDateString()}`
                                     : "Definir Data"}
@@ -96,7 +112,7 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                             onPress={() => setShowTimePicker(true)}
                             style={stylesTaskFormModal.timePickerButton}
                         >
-                            <Text style={{ color: "#FFF" }}>
+                            <Text style={stylesTaskFormModal.timePickerText}>
                                 {alarmTime
                                     ? `Hora: ${new Date(alarmTime).toLocaleTimeString()}`
                                     : "Definir Hora"}
@@ -104,6 +120,8 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                         </TouchableOpacity>
                     </>
                 )}
+
+                {/* DateTimePicker */}
                 {showDatePicker && (
                     <DateTimePicker
                         value={alarmTime ? new Date(alarmTime) : new Date()}
@@ -121,6 +139,8 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                         onChange={handleTimeChange}
                     />
                 )}
+
+                {/* Botões */}
                 <TouchableOpacity
                     style={stylesTaskFormModal.saveButton}
                     onPress={() => onSave({ title, description, hasAlarm, alarmTime })}
@@ -135,5 +155,7 @@ export function TaskFormModal({ visible, task, onSave, onClose }: TaskFormModalP
                 </TouchableOpacity>
             </View>
         </Modal>
+
+
     );
 }

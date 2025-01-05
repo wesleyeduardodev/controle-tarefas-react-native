@@ -8,6 +8,24 @@ export const stylesTaskFormModal = StyleSheet.create({
         alignItems: "center",
         padding: 20,
     },
+    timePickerText: {
+        color: "#FFF",
+        fontSize: 16,
+    },
+    label: {
+        color: "#FFF",
+        fontSize: 16,
+        marginBottom: 8,
+        textAlign: "left",
+        fontWeight: "bold",
+    },
+    charCount: {
+        color: "#FFF",
+        fontSize: 14,
+        textAlign: "right",
+        marginBottom: 15,
+    },
+
     title: {
         color: "#FFF",
         fontSize: 20,

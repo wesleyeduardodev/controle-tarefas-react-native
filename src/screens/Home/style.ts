@@ -12,7 +12,7 @@ export const stylesHome = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 8,
-        marginTop: 20,
+        marginTop: 40,
         padding: 12,
         marginBottom: 16,
     },
