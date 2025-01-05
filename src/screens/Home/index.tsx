@@ -151,7 +151,7 @@ export function Home() {
             <View style={stylesHome.form}>
                 <TextInput
                     style={stylesHome.input}
-                    placeholder="Título da Tarefa"
+                    placeholder="Título"
                     placeholderTextColor="#6B6B6B"
                     onChangeText={setTaskName}
                     value={taskName}

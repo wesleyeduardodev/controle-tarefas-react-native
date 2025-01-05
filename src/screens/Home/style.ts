@@ -10,6 +10,7 @@ export const stylesHome = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        marginTop: 30,
         marginVertical: 16,
     },
     icon: {
