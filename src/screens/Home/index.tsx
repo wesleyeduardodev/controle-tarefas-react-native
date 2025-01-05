@@ -145,10 +145,9 @@ export function Home() {
     return (
         <View style={stylesHome.container}>
             <View style={stylesHome.logoContainer}>
-                <Icon name="rocket" size={64} color="#31CF67" style={stylesHome.icon} />
-                <Text style={stylesHome.appName}>Controle de Tarefas</Text>
+                <Icon name="calendar-today" size={64} color="#31CF67" style={stylesHome.icon} />
+                <Text style={stylesHome.appName}>Minha Agenda</Text>
             </View>
-
             <View style={stylesHome.form}>
                 <TextInput
                     style={stylesHome.input}

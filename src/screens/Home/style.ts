@@ -4,7 +4,7 @@ export const stylesHome = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#131016",
-        padding: 15,
+        padding: 20,
     },
     logoContainer: {
         flexDirection: "row",
