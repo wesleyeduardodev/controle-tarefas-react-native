@@ -36,7 +36,7 @@ export function Task({
                 </Text>
                 {hasAlarm && alarmTime && (
                     <Text style={stylesTask.alarmText}>
-                        ⏰ {new Date(alarmTime).toLocaleDateString()} às {new Date(alarmTime).toLocaleTimeString()}
+                        ⏰ {new Date(alarmTime).toLocaleDateString()} às {new Date(alarmTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </Text>
                 )}
             </View>
