@@ -23,101 +23,149 @@ export function Home() {
 
     const fetchExpenses = async () => {
         try {
-            console.log("Carregandos gastos..")
+            console.log("Carregando gastos...");
             const response = await api.get("/expenses");
             setExpenses(response.data);
-        } catch (error) {
-            console.error("Não foi possível carregar gastos..")
-            Alert.alert("Erro", "Não foi possível carregar os gastos.");
+            console.log("Gastos carregados com sucesso:", response.data);
+        } catch (error: any) {
+            console.error("Erro ao carregar gastos:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao carregar gastos",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
     const fetchCategories = async () => {
         try {
-            console.log("Carregandos categorias..")
+            console.log("Carregando categorias...");
             const response = await api.get("/categories");
             setCategories(response.data);
-        } catch (error) {
-            console.error("Não foi possível carregar categorias..")
-            Alert.alert("Erro", "Não foi possível carregar as categorias.");
+            console.log("Categorias carregadas com sucesso:", response.data);
+        } catch (error: any) {
+            console.error("Erro ao carregar categorias:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao carregar categorias",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
     const handleAddExpense = async (newExpense: ExpenseProps) => {
         try {
+            console.log("Adicionando gasto:", newExpense);
             const response = await api.post("/expenses", {
                 valor: newExpense.valor,
-                categoriaId: newExpense.categoriaId, // Certifique-se de que é o ID da categoria
+                categoriaId: newExpense.categoriaId,
                 dataHora: newExpense.dataHora,
             });
-
             setExpenses((prev) => [...prev, response.data]);
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível adicionar o gasto.");
+            console.log("Gasto adicionado com sucesso:", response.data);
+        } catch (error: any) {
+            console.error("Erro ao adicionar gasto:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao adicionar gasto",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
-
     const handleEditExpense = async (id: number, updatedExpense: Partial<ExpenseProps>) => {
         try {
+            console.log("Editando gasto:", id, updatedExpense);
             const response = await api.put(`/expenses/${id}`, {
                 valor: updatedExpense.valor,
-                categoriaId: updatedExpense.categoriaId, // Enviando o ID da categoria
+                categoriaId: updatedExpense.categoriaId,
                 dataHora: updatedExpense.dataHora,
             });
-
             setExpenses((prev) =>
                 prev.map((expense) =>
                     expense.id === id ? response.data : expense
                 )
             );
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível editar o gasto.");
+            console.log("Gasto editado com sucesso:", response.data);
+        } catch (error: any) {
+            console.error("Erro ao editar gasto:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao editar gasto",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
-
-
     const handleRemoveExpense = async (id: number) => {
         try {
+            console.log("Removendo gasto:", id);
             await api.delete(`/expenses/${id}`);
             setExpenses((prev) => prev.filter((expense) => expense.id !== id));
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível remover o gasto.");
+            console.log("Gasto removido com sucesso.");
+        } catch (error: any) {
+            console.error("Erro ao remover gasto:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao remover gasto",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
     const handleAddCategory = async (newCategory: CategoryProps) => {
         try {
+            console.log("Adicionando categoria:", newCategory);
             const response = await api.post("/categories", newCategory);
             setCategories((prev) => [...prev, response.data]);
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível adicionar a categoria.");
+            console.log("Categoria adicionada com sucesso:", response.data);
+        } catch (error: any) {
+            console.error("Erro ao adicionar categoria:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao adicionar categoria",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
     const handleEditCategory = async (id: number, updatedCategory: Partial<CategoryProps>) => {
         try {
+            console.log("Editando categoria:", id, updatedCategory);
             const existingCategory = categories.find((category) => category.id === id);
-            if (!existingCategory) return;
-
+            if (!existingCategory) {
+                console.warn("Categoria não encontrada:", id);
+                return;
+            }
             const mergedCategory = { ...existingCategory, ...updatedCategory };
-            await api.put(`/categories/${id}`, mergedCategory);
-
+            const response = await api.put(`/categories/${id}`, mergedCategory);
             setCategories((prev) =>
                 prev.map((category) => (category.id === id ? mergedCategory : category))
             );
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível editar a categoria.");
+            console.log("Categoria editada com sucesso:", response.data);
+        } catch (error: any) {
+            console.error("Erro ao editar categoria:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao editar categoria",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
     const handleRemoveCategory = async (id: number) => {
         try {
+            console.log("Removendo categoria:", id);
             await api.delete(`/categories/${id}`);
             setCategories((prev) => prev.filter((category) => category.id !== id));
-        } catch (error) {
-            Alert.alert("Erro", "Não foi possível remover a categoria.");
+            console.log("Categoria removida com sucesso.");
+        } catch (error: any) {
+            console.error("Erro ao remover categoria:", error.message);
+            console.error("Detalhes do erro:", error);
+            Alert.alert(
+                "Erro ao remover categoria",
+                `Detalhes: ${error.message}\n${error.response?.data?.message || "Sem detalhes adicionais"}`
+            );
         }
     };
 
@@ -192,7 +240,6 @@ export function Home() {
                 />
             )}
 
-
             {isCategoryModalVisible && (
                 <CategoryFormModal
                     visible={isCategoryModalVisible}
@@ -208,7 +255,6 @@ export function Home() {
                     onClose={() => setIsCategoryModalVisible(false)}
                 />
             )}
-
         </View>
     );
 }
