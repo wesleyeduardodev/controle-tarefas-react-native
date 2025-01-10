@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
     Alert,
     FlatList,
@@ -6,11 +6,11 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
-import {Task, TaskProps} from "../components/Task";
-import {FormModal} from "../components/Task/FormModal";
+import { Task, TaskProps } from "../components/Task";
+import { FormModal } from "../components/Task/FormModal";
 import Icon from "react-native-vector-icons/MaterialIcons";
-import {stylesHome} from "./style";
-import {api} from "../services/api";
+import { stylesHome } from "./style";
+import { api } from "../services/api";
 
 export function Home() {
     const [tasks, setTasks] = useState<TaskProps[]>([]);
@@ -44,9 +44,17 @@ export function Home() {
 
     const handleEditTask = async (id: number, updatedTask: Partial<TaskProps>) => {
         try {
-            await api.put(`/tasks/v1/${id}`, updatedTask);
+            const existingTask = tasks.find((task) => task.id === id);
+            if (!existingTask) {
+                Alert.alert("Erro", "Tarefa não encontrada.");
+                return;
+            }
+
+            const mergedTask = { ...existingTask, ...updatedTask };
+
+            await api.put(`/tasks/v1/${id}`, mergedTask);
             setTasks((prevState) =>
-                prevState.map((task) => (task.id === id ? {...task, ...updatedTask} : task))
+                prevState.map((task) => (task.id === id ? mergedTask : task))
             );
         } catch (error) {
             Alert.alert("Erro", "Não foi possível editar a tarefa.");
@@ -72,14 +80,16 @@ export function Home() {
                 return;
             }
 
-            await api.put(`/tasks/v1/${id}`, {
-                title: taskToUpdate.title,
+            const updatedTask = {
+                ...taskToUpdate,
                 completed: !currentStatus,
-            });
+            };
+
+            await api.put(`/tasks/v1/${id}`, updatedTask);
 
             setTasks((prevState) =>
                 prevState.map((task) =>
-                    task.id === id ? {...task, completed: !currentStatus} : task
+                    task.id === id ? updatedTask : task
                 )
             );
         } catch (error) {
@@ -107,7 +117,7 @@ export function Home() {
                     setIsModalVisible(true);
                 }}
             >
-                <Icon name="add" size={28} color="#FFF"/>
+                <Icon name="add" size={28} color="#FFF" />
                 <Text style={stylesHome.addButtonText}>Adicionar Lembrete</Text>
             </TouchableOpacity>
 
@@ -153,7 +163,7 @@ export function Home() {
             <FlatList
                 data={filteredTasks}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({item}) => (
+                renderItem={({ item }) => (
                     <Task
                         id={item.id}
                         title={item.title}
