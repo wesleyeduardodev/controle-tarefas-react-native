@@ -45,28 +45,38 @@ export function Home() {
 
     const handleAddExpense = async (newExpense: ExpenseProps) => {
         try {
-            const response = await api.post("/expenses", newExpense);
+            const response = await api.post("/expenses", {
+                valor: newExpense.valor,
+                categoriaId: newExpense.categoriaId, // Certifique-se de que é o ID da categoria
+                dataHora: newExpense.dataHora,
+            });
+
             setExpenses((prev) => [...prev, response.data]);
         } catch (error) {
             Alert.alert("Erro", "Não foi possível adicionar o gasto.");
         }
     };
 
+
     const handleEditExpense = async (id: number, updatedExpense: Partial<ExpenseProps>) => {
         try {
-            const existingExpense = expenses.find((expense) => expense.id === id);
-            if (!existingExpense) return;
-
-            const mergedExpense = { ...existingExpense, ...updatedExpense };
-            await api.put(`/expense/${id}`, mergedExpense);
+            const response = await api.put(`/expenses/${id}`, {
+                valor: updatedExpense.valor,
+                categoriaId: updatedExpense.categoriaId, // Enviando o ID da categoria
+                dataHora: updatedExpense.dataHora,
+            });
 
             setExpenses((prev) =>
-                prev.map((expense) => (expense.id === id ? mergedExpense : expense))
+                prev.map((expense) =>
+                    expense.id === id ? response.data : expense
+                )
             );
         } catch (error) {
             Alert.alert("Erro", "Não foi possível editar o gasto.");
         }
     };
+
+
 
     const handleRemoveExpense = async (id: number) => {
         try {
