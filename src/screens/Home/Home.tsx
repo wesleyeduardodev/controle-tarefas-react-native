@@ -23,25 +23,29 @@ export function Home() {
 
     const fetchExpenses = async () => {
         try {
-            const response = await api.get("/expenses/v1");
+            console.log("Carregandos gastos..")
+            const response = await api.get("/expenses");
             setExpenses(response.data);
         } catch (error) {
+            console.error("Não foi possível carregar gastos..")
             Alert.alert("Erro", "Não foi possível carregar os gastos.");
         }
     };
 
     const fetchCategories = async () => {
         try {
-            const response = await api.get("/categories/v1");
+            console.log("Carregandos categorias..")
+            const response = await api.get("/categories");
             setCategories(response.data);
         } catch (error) {
+            console.error("Não foi possível carregar categorias..")
             Alert.alert("Erro", "Não foi possível carregar as categorias.");
         }
     };
 
     const handleAddExpense = async (newExpense: ExpenseProps) => {
         try {
-            const response = await api.post("/expenses/v1", newExpense);
+            const response = await api.post("/expenses", newExpense);
             setExpenses((prev) => [...prev, response.data]);
         } catch (error) {
             Alert.alert("Erro", "Não foi possível adicionar o gasto.");
@@ -54,7 +58,7 @@ export function Home() {
             if (!existingExpense) return;
 
             const mergedExpense = { ...existingExpense, ...updatedExpense };
-            await api.put(`/expenses/v1/${id}`, mergedExpense);
+            await api.put(`/expense/${id}`, mergedExpense);
 
             setExpenses((prev) =>
                 prev.map((expense) => (expense.id === id ? mergedExpense : expense))
@@ -66,7 +70,7 @@ export function Home() {
 
     const handleRemoveExpense = async (id: number) => {
         try {
-            await api.delete(`/expenses/v1/${id}`);
+            await api.delete(`/expenses/${id}`);
             setExpenses((prev) => prev.filter((expense) => expense.id !== id));
         } catch (error) {
             Alert.alert("Erro", "Não foi possível remover o gasto.");
@@ -75,7 +79,7 @@ export function Home() {
 
     const handleAddCategory = async (newCategory: CategoryProps) => {
         try {
-            const response = await api.post("/categories/v1", newCategory);
+            const response = await api.post("/categories", newCategory);
             setCategories((prev) => [...prev, response.data]);
         } catch (error) {
             Alert.alert("Erro", "Não foi possível adicionar a categoria.");
@@ -88,7 +92,7 @@ export function Home() {
             if (!existingCategory) return;
 
             const mergedCategory = { ...existingCategory, ...updatedCategory };
-            await api.put(`/categories/v1/${id}`, mergedCategory);
+            await api.put(`/categories/${id}`, mergedCategory);
 
             setCategories((prev) =>
                 prev.map((category) => (category.id === id ? mergedCategory : category))
@@ -100,7 +104,7 @@ export function Home() {
 
     const handleRemoveCategory = async (id: number) => {
         try {
-            await api.delete(`/categories/v1/${id}`);
+            await api.delete(`/categories/${id}`);
             setCategories((prev) => prev.filter((category) => category.id !== id));
         } catch (error) {
             Alert.alert("Erro", "Não foi possível remover a categoria.");

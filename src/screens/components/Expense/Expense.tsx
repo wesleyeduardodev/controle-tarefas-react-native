@@ -4,20 +4,20 @@ import { stylesExpense } from "./styleExpense";
 
 export type ExpenseProps = {
     id: number;
-    value: number;
-    category: string;
-    dateTime: string;
+    valor: number;
+    categoria: string;
+    dataHora: string;
     onEdit: () => void;
     onRemove: () => void;
 };
 
-export function Expense({ id, value, category, dateTime, onEdit, onRemove }: ExpenseProps) {
+export function Expense({ id, valor, categoria, dataHora, onEdit, onRemove }: ExpenseProps) {
     return (
         <View style={stylesExpense.container}>
             <View style={stylesExpense.info}>
-                <Text style={stylesExpense.value}>R$ {value.toFixed(2)}</Text>
-                <Text style={stylesExpense.category}>{category}</Text>
-                <Text style={stylesExpense.dateTime}>{new Date(dateTime).toLocaleString()}</Text>
+                <Text style={stylesExpense.value}>R$ {valor.toFixed(2)}</Text>
+                <Text style={stylesExpense.category}>{categoria}</Text>
+                <Text style={stylesExpense.dateTime}>{new Date(dataHora).toLocaleString()}</Text>
             </View>
             <View style={stylesExpense.actions}>
                 <TouchableOpacity style={stylesExpense.editButton} onPress={onEdit}>

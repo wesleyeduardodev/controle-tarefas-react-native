@@ -22,11 +22,11 @@ export function CategoryFormModal({
                                       onSave,
                                       onClose,
                                   }: CategoryFormModalProps) {
-    const [name, setName] = useState(category?.name || "");
+    const [name, setName] = useState(category?.nome || "");
 
     useEffect(() => {
         if (category) {
-            setName(category.name);
+            setName(category.nome);
         }
     }, [category]);
 
@@ -51,7 +51,7 @@ export function CategoryFormModal({
                             alert("O nome da categoria é obrigatório.");
                             return;
                         }
-                        onSave({ name });
+                        onSave({ nome: name });
                     }}
                 >
                     <Text style={stylesCategoryFormModal.buttonText}>Salvar</Text>

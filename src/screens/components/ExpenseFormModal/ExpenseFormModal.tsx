@@ -7,7 +7,7 @@ import { stylesExpenseFormModal } from "./styleExpenseFormModal";
 type ExpenseFormModalProps = {
     visible: boolean;
     expense: ExpenseProps | null;
-    categories: { id: number; name: string }[];
+    categories: { id: number; nome: string }[];
     onSave: (expense: Partial<ExpenseProps>) => void;
     onClose: () => void;
 };
@@ -19,15 +19,15 @@ export function ExpenseFormModal({
                                      onSave,
                                      onClose,
                                  }: ExpenseFormModalProps) {
-    const [value, setValue] = useState<string>(expense?.value.toString() || "");
-    const [category, setCategory] = useState<string>(expense?.category || "");
-    const [dateTime, setDateTime] = useState<string>(expense?.dateTime || new Date().toISOString());
+    const [value, setValue] = useState<string>(expense?.valor.toString() || "");
+    const [category, setCategory] = useState<string>(expense?.categoria || "");
+    const [dateTime, setDateTime] = useState<string>(expense?.dataHora || new Date().toISOString());
 
     useEffect(() => {
         if (expense) {
-            setValue(expense.value.toString());
-            setCategory(expense.category);
-            setDateTime(expense.dateTime);
+            setValue(expense.valor.toString());
+            setCategory(expense.categoria);
+            setDateTime(expense.dataHora);
         }
     }, [expense]);
 
@@ -50,13 +50,13 @@ export function ExpenseFormModal({
                     onValueChange={(itemValue) => setCategory(itemValue)}
                 >
                     {categories.map((cat) => (
-                        <Picker.Item key={cat.id} label={cat.name} value={cat.name} />
+                        <Picker.Item key={cat.id} label={cat.nome} value={cat.nome} />
                     ))}
                 </Picker>
 
                 <TouchableOpacity
                     style={stylesExpenseFormModal.saveButton}
-                    onPress={() => onSave({ value: parseFloat(value), category, dateTime })}
+                    onPress={() => onSave({ valor: parseFloat(value), categoria: category, dataHora: dateTime })}
                 >
                     <Text style={stylesExpenseFormModal.buttonText}>Salvar</Text>
                 </TouchableOpacity>
